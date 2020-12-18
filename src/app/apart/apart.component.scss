@@ -1,0 +1,95 @@
+.modal-content {
+    width: 579px;
+}
+
+.btn {
+    display: inline-block;
+    margin: 3px;
+}
+
+.btn--pill {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+/*-----radioBtn-----*/
+
+.fw-color-choose label span {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: 45px;
+	font-size: 11px;
+	color: #414141;
+}
+
+.fw-color-choose input[type=radio] {
+	visibility: hidden;
+	position: absolute;
+}
+
+.fw-color-choose input[type=radio]:checked+label {
+	-webkit-box-shadow: 0 0 0 2px #f51167;
+	box-shadow: 0 0 0 2px #f51167;
+}
+
+.fw-color-choose input[type=radio]:checked+label span {
+	color: #b09d81;
+}
+
+.fw-size-choose .sc-item {
+	display: inline-block;
+	position: relative;
+	margin-right: 5px;
+}
+
+.fw-size-choose label {
+	display: inline-block;
+	height: 30px;
+	min-width: 30px;
+	text-align: center;
+	font-size: 14px;
+	color: #414141;
+	font-weight: 500;
+	cursor: pointer;
+	border-radius: 50px;
+	padding: 7px 6px 0;
+}
+
+.fw-size-choose input[type=radio] {
+	visibility: hidden;
+	position: absolute;
+}
+
+.fw-size-choose input[type=radio]:checked+label {
+	background: #f51167;
+	color: #fff;
+}
+
+/* ==========================================================================
+   #TABLE
+   ========================================================================== */
+   .table{
+    padding-left: 2%;
+  }
+  
+  .search-product {
+    margin-top: 4%;
+    margin-bottom: 5%;
+  }
+  
+  .imgTable{
+    width: 51px;
+    height: 53px;
+  }
+
+  .billing {
+    margin-top: 5%;
+  }
+
+@media (max-width: 800px) {
+    .modal {
+        width: 120px;
+    }
+}

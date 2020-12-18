@@ -1,0 +1,250 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Información de la prenda</h5>
+                </div>
+                <div class="card-body">
+                    <form #editProduct="ngForm" novalidate>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nombre del Producto</label>
+                                    <input type="text" class="form-control"
+                                    name="name" #name="ngModel" [(ngModel)]="product.name" required>
+                                    <div *ngIf="name.touched && name.invalid" >
+                                        <br>
+                                      <div class="alert alert-info">
+                                          <span>
+                                            El nombre es requerido.
+                                          </span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Descripción del producto</label>
+                                    <textarea  cols="80" class="form-control"
+                                    placeholder="Aqui la descripcion de la prenda"
+                                    name="detail" #detail="ngModel" [(ngModel)]="product.detail"
+                                    type="text" required>
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 pr-1">
+                                <div class="form-group">
+                                    <label>Precio Público</label>
+                                    <input type="text" class="form-control"  placeholder="₡ 0.00"
+                                    name="pricePublic" #pricePublic="ngModel" [(ngModel)]="product.pricePublic" type="text" required>
+                                    <div *ngIf="pricePublic.touched && pricePublic.invalid" >
+                                        <br>
+                                      <div class="alert alert-info">
+                                          <span>
+                                            El precio de público es requerido
+                                          </span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 px-1">
+                                <div class="form-group">
+                                    <label>Precio por Mayor</label>
+                                    <input type="number" class="form-control" placeholder="₡ 0.00"
+                                    name="priceMajor" #priceMajor="ngModel"
+                                    [(ngModel)]="product.priceMajor" required>
+                                    <div *ngIf="priceMajor.touched && priceMajor.invalid" >
+                                        <br>
+                                      <div class="alert alert-info">
+                                          <span>
+                                            El precio por mayor es requerido
+                                          </span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pl-1">
+                                <div class="form-group">
+                                    <label>Precio Tu Boutique</label>
+                                    <input type="number" class="form-control" placeholder="₡ 0.00"
+                                    name="priceTuB" #priceTuB="ngModel"
+                                    [(ngModel)]="product.priceTuB" required>
+                                    <div *ngIf="priceTuB.touched && priceTuB.invalid" >
+                                        <br>
+                                      <div class="alert alert-info">
+                                          <span>
+                                            El precio TuBoutique es requerido.
+                                          </span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 pr-1">
+                                <div class="form-group">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                        ngbDropdownToggle>{{brandLabel}}</button>
+                                        <div style="overflow:auto; height: 200px;" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <div class="search-product" style="margin-top: 5%;">
+                                                <input class="form-control" type="text" name="search" [(ngModel)]="searchProduct" autocomplete="off"
+                                                  placeholder=" &#61442; Buscar...">
+                                              </div>
+                                            <button *ngFor="let tag of tags | filter: searchProduct" [value]="tag.id"
+                                          ngbDropdownItem (click)="pushTag(tag)">{{tag.name}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 px-1">
+                                <div class="form-group">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                        ngbDropdownToggle>{{genderLabel}}</button>
+                                        <div style="overflow:auto; height: 200px;" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <div class="search-product" style="margin-top: 5%;">
+                                                <button *ngFor="let gen of gender | filter: searchProduct"
+                                                ngbDropdownItem (click)="pushGender(gen)">{{gen.name}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pl-1">
+                                <div class="form-group">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                        ngbDropdownToggle>{{dtpLabel}}</button>
+                                        <div style="overflow:auto; height: 200px;" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <div class="search-product" style="margin-top: 5%;">
+                                                <input class="form-control" type="text" name="search" [(ngModel)]="searchProduct" autocomplete="off"
+                                                  placeholder=" &#61442; Buscar...">
+                                              </div>
+                                            <button *ngFor="let dtp of department | filter: searchProduct"
+                                          ngbDropdownItem (click)="pushDepart(dtp)">{{dtp.name}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Peso</label>
+                                <input class="form-control" type="text"  name="weight" #weight="ngModel"
+                                [(ngModel)]="product.weight" placeholder="Kg" type="text" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button
+                                type="button" class="btn btn-default btn-success" (click)="editProductFunc(editProduct)">
+                                <i class="now-ui-icons files_box"></i> Guardar Producto
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-3 pr-1">
+                            <div class="form-group">
+                                <label>Talla</label>
+                                <input class="form-control" name="sizeRef" #sizeRef="ngModel" [(ngModel)]="size.size"
+                                type="text" type="text" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-3 px-1">
+                            <div class="form-group">
+                                <label>Cantidad</label>
+                                <input class="form-control" type="number" name="amount" #amount="ngModel"
+                                [(ngModel)]="size.amount" min="0" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-1">
+                            <div class="form-group">
+                                <button style="margin-top: 23px;" type="button"
+                                class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
+                                    <i class="now-ui-icons ui-1_simple-add"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                              <th scope="col">Talla</th>
+                              <th scope="col">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let relationship of viewRelation">
+                                <td style="font-weight: bold;">
+                                    {{ relationship.size }}
+                                </td>
+                                <td style="font-weight: bold;">
+                                    <input type="number" name="amount" #amount="ngModel"
+                                    [(ngModel)]="relationship.pivot.stock"/>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success">
+                                       Actualizar
+                                    </button>
+                                    <button type="button" class="btn btn-danger">
+                                      <i class="far fa-trash-alt"></i> Eliminar
+                                    </button>
+                                  </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-user">
+                <div>
+                    <img [src]="fileBlob" alt="...">
+                </div>
+                <button style="margin-left: 94px; margin-top: 23px;"
+                type="button" class="btn btn-default btn-success " (click)="compressFile()">
+                <i class="fas fa-file-upload"></i>Subir Imagen
+                </button>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Imagenes 
+                        <button  type="button"
+                        class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
+                            <i class="now-ui-icons ui-1_simple-add"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div style="margin-left: 20%;" class="col-md-7">
+                            <ngb-carousel>
+                                <ng-template  *ngFor="let img of fileNpm" ngbSlide>
+                                    <div class="picsum-img-wrapper">
+                                        <img style="width:100%;" [src]="img.name" alt="Random first slide">
+                                    </div>
+                                    <div class="carousel-caption">
+                                        <button type="button" class="btn btn-danger">
+                                            <i class="far fa-trash-alt"></i> Eliminar
+                                        </button>
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

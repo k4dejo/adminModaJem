@@ -1,0 +1,319 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Nueva prenda</h5>
+                </div>
+                <div class="card-body">
+                    <form #addProduct="ngForm" novalidate>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nombre del Producto</label>
+                                    <input type="text" class="form-control" name="name" #name="ngModel"
+                                        [(ngModel)]="product.name" required>
+                                    <div *ngIf="name.touched && name.invalid">
+                                        <br>
+                                        <div class="alert alert-info">
+                                            <span>
+                                                El nombre es requerido.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Descripción del producto</label>
+                                    <textarea cols="80" class="form-control"
+                                        placeholder="Aqui la descripcion de la prenda" name="detail" #detail="ngModel"
+                                        [(ngModel)]="product.detail" type="text" required>
+                                </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 pr-1">
+                                <div class="form-group">
+                                    <label>Precio Público</label>
+                                    <input type="text" class="form-control" placeholder="₡ 0.00" name="pricePublic"
+                                        #pricePublic="ngModel" [(ngModel)]="product.pricePublic" type="text" required>
+                                    <div *ngIf="pricePublic.touched && pricePublic.invalid">
+                                        <br>
+                                        <div class="alert alert-info">
+                                            <span>
+                                                El precio de público es requerido
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 px-1">
+                                <div class="form-group">
+                                    <label>Precio por Mayor</label>
+                                    <input type="number" class="form-control" placeholder="₡ 0.00" name="priceMajor"
+                                        #priceMajor="ngModel" [(ngModel)]="product.priceMajor" required>
+                                    <div *ngIf="priceMajor.touched && priceMajor.invalid">
+                                        <br>
+                                        <div class="alert alert-info">
+                                            <span>
+                                                El precio por mayor es requerido
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pl-1">
+                                <div class="form-group">
+                                    <label>Precio Tu Boutique</label>
+                                    <input type="number" class="form-control" placeholder="₡ 0.00" name="priceTuB"
+                                        #priceTuB="ngModel" [(ngModel)]="product.priceTuB" required>
+                                    <div *ngIf="priceTuB.touched && priceTuB.invalid">
+                                        <br>
+                                        <div class="alert alert-info">
+                                            <span>
+                                                El precio TuBoutique es requerido.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 pr-1">
+                                <div class="form-group">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                            ngbDropdownToggle>{{brandLabel}}</button>
+                                        <div style="overflow:auto; height: 200px;" ngbDropdownMenu
+                                            aria-labelledby="dropdownBasic1">
+                                            <div class="search-product" style="margin-top: 5%;">
+                                                <input class="form-control" type="text" name="search"
+                                                    [(ngModel)]="searchProduct" autocomplete="off"
+                                                    placeholder=" &#61442; Buscar...">
+                                            </div>
+                                            <button *ngFor="let tag of tags | filter: searchProduct" [value]="tag.id"
+                                                ngbDropdownItem (click)="pushTag(tag)">{{tag.name}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 px-1">
+                                <div class="form-group">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                            ngbDropdownToggle>{{genderLabel}}</button>
+                                        <div style="overflow:auto; height: 200px;" ngbDropdownMenu
+                                            aria-labelledby="dropdownBasic1">
+                                            <div class="search-product" style="margin-top: 5%;">
+                                                <button *ngFor="let gen of genderApi | filter: searchProduct"
+                                                    ngbDropdownItem (click)="pushGenderApi(gen)">{{gen.gender}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pl-1">
+                                <div class="form-group">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                            ngbDropdownToggle>{{dtpLabel}}</button>
+                                        <div style="overflow:auto; height: 200px;" ngbDropdownMenu
+                                            aria-labelledby="dropdownBasic1">
+                                            <div class="search-product" style="margin-top: 5%;">
+                                                <input class="form-control" type="text" name="search"
+                                                    [(ngModel)]="searchProduct" autocomplete="off"
+                                                    placeholder=" &#61442; Buscar...">
+                                            </div>
+                                            <button *ngFor="let department of dtp | filter: searchProduct"
+                                                ngbDropdownItem
+                                                (click)="pushDepartmentApi(department)">{{department.department}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 pr-1">
+                                <label>Peso</label>
+                                <input class="form-control" type="text" name="weight" #weight="ngModel"
+                                    [(ngModel)]="product.weight" placeholder="Kg" type="text" required>
+                            </div>
+                            <div class="col-md-3 pr-1">
+                                <div class="form-group">
+                                    <label>Talla</label>
+                                    <input type="text" class="form-control" placeholder="XL" name="sizeRef"
+                                        #sizeRef="ngModel" [(ngModel)]="size.size" required>
+                                </div>
+                                <div class="alert alert-info" *ngIf="warningSize" role="alert">
+                                    <span>
+                                        El campo talla es requerido.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 px-1">
+                                <div class="form-group">
+                                    <label>Cantidad</label>
+                                    <input class="form-control" type="number" name="amount" #amount="ngModel"
+                                        [(ngModel)]="size.amount" required>
+                                </div>
+                                <div class="alert alert-info" *ngIf="warningAmount">
+                                    El campo cantidad debe que ser mayor a 0.
+                                </div>
+                            </div>
+                            <div class="col-md-3 pl-1">
+                                <button style="margin-top: 23px;" type="button"
+                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
+                                    (click)="saveSizeAmount(size)">
+                                    <i class="now-ui-icons ui-1_simple-add"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'"
+                                    (change)="onSelect($event)">
+                                    <ngx-dropzone-label>
+                                        <div>
+                                            <h6>Agregar Imagenes</h6>
+                                        </div>
+                                    </ngx-dropzone-label>
+                                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                        *ngFor="let f of fileNpm" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                    </ngx-dropzone-image-preview>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-default btn-success"
+                                    (click)="saveProduct(addProduct)">
+                                    <i class="now-ui-icons files_box"></i> Guardar Producto
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-user">
+                <div>
+                    <img [src]="fileBlob" alt="...">
+                </div>
+                <button style="margin-left: 94px; margin-top: 23px;" type="button" class="btn btn-default btn-success "
+                    (click)="compressFile()">
+                    <i class="fas fa-file-upload"></i>Subir Imagen
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"> Productos</h4>
+                </div>
+                <div class="card-body">
+                    <pagination-controls class="my-pagination" previousLabel="anterior" nextLabel="Siguiente"
+                    (pageChange)="nextPaginate($event)"></pagination-controls>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th></th>
+                                <th>Producto</th>
+                                <th>Género</th>
+                                <th>Departamento</th>
+                                <th>Precios</th>
+                                <th class="text-right">Peso</th>
+                                <th class="text-right">Acciones</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of productView | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalPage }">
+                                    <td>
+                                        <img style="width: 40px; height: 50px;" [src]="product.photo" alt="">
+                                    </td>
+                                    <td>
+                                        <a style="cursor: pointer;">{{product.name}}</a>
+                                    </td>
+                                    <td>
+                                        {{product.gender.gender}}
+                                    </td>
+                                    <td>
+                                        {{product.department.department}}
+                                    </td>
+                                    <td>
+                                        <!--{{product.pricePublic | number: '3.'}}-->
+                                        <a style="cursor:pointer; font-weight: bold; margin-bottom: 5px;"
+                                            [ngbPopover]="product.pricePublic | number: '3.'"
+                                            triggers="mouseenter:mouseleave" popoverTitle="Precio Público">
+                                            Público
+                                        </a><br>
+                                        <a style="cursor:pointer; font-weight: bold; margin-bottom: 5px;"
+                                            [ngbPopover]="product.priceMajor | number: '3.'"
+                                            triggers="mouseenter:mouseleave" popoverTitle="Precio x Mayor">
+                                            Mayoreo
+                                        </a><br>
+                                        <a style="cursor:pointer; font-weight: bold;"
+                                            [ngbPopover]="product.priceTuB | number: '3.'"
+                                            triggers="mouseenter:mouseleave" popoverTitle="Precio TuBoutique">
+                                            TuBoutique
+                                        </a>
+                                    </td>
+                                    <td class="text-right">
+                                        {{product.weight}}kg
+                                    </td>
+                                    <td>
+                                        <button type="button" (click)="gotoEdit(product.id)" class="btn btn-default">
+                                            <i class="far fa-edit"></i> Modificar
+                                        </button>
+                                        <button type="button" (click)="deleteProductView(product.id)"
+                                            class="btn btn-danger"><i class="far fa-trash-alt"></i> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination-controls class="my-pagination" previousLabel="anterior" nextLabel="Siguiente"
+                    (pageChange)="nextPaginate($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="openModalButton" [hidden]="true" (click)="open(content)">Open Modal</button>
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Imagen Comparativa</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>El peso de la imagen puede provocar lentitud a la hora de cargarla,
+            puedes elegir cual de las dos versiones subir dando click en ellas
+        </p>
+        <div class="row">
+            <div class="col-md-12">
+                <img style="width: 300px; height: 350px; cursor: pointer;" [src]="imgResultBeforeCompress"
+                    (click)="choseImg(imgResultBeforeCompress)" data-dismiss="modal" alt="">
+                <h4>Tamaño de imagen sin procesar: <span>{{sizeBeforeCompress}}</span></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <img style="width: 300px; height: 350px; cursor: pointer;" [src]="imgResultAfterCompress"
+                    (click)="choseImg(imgResultAfterCompress)" data-dismiss="modal" alt="">
+                <h4>Tamaño de imagen procesada: <span>{{sizeAfterCompress}}</span></h4>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<div *ngIf="loading" class="loading">Loading&#8230;</div>

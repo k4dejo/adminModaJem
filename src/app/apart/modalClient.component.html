@@ -1,0 +1,32 @@
+<div class="modal-content" style="overflow:auto;">
+  <div class="modal-header">
+    <h4 class="modal-title">Lista de Clientes</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <pagination-controls class="my-pagination" (pageChange)="pClient = $event">
+    </pagination-controls>
+    <table class="table">
+      <thead class=" text-primary">
+          <th>Cliente</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th></th>
+      </thead>
+      <tbody>
+          <tr *ngFor="let client of clients | paginate: { itemsPerPage: 12, currentPage: pClient }">
+              <td>{{client.name}}</td>
+              <td>{{client.email}}</td>
+              <td>{{client.phone}}</td>
+              <td><button (click)="selectClient(client)" class="btn btn-outline-primary">Agregar</button></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  </div>
+</div>
+

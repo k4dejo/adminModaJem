@@ -28,9 +28,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "src/assets/scss/now-ui-dashboard.scss",
+              "src/assets/demo/demo.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -123,6 +128,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "admin-modajem"
+    }
+  },
+  "defaultProject": "admin-modajem",
+  "cli": {
+    "analytics": "8d14f74c-78e1-409b-a93e-4b7f26ce4393"
+  }
 }
