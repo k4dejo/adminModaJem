@@ -9,6 +9,7 @@ import { CouponsComponent } from '../../coupons/coupons.component';
 import { PromoComponent } from '../../promo/promo.component';
 import { EditproductComponent } from '../../editproduct/editproduct.component';
 import { ApartComponent } from 'src/app/apart/apart.component';
+import { SendbillingComponent } from '../../sendbilling/sendbilling.component';
 
 export const AdminLayoutRoutes: Routes = [
     
@@ -22,4 +23,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'Promociones',        component: PromoComponent },
     { path: 'Cupones',            component: CouponsComponent },
     { path: 'editarProducto/:id', component: EditproductComponent },
+    { path: 'facturar/:id/:shipping',       component: SendbillingComponent },
 ];

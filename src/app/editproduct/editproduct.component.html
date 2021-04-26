@@ -8,7 +8,7 @@
                     <h5 class="title">Información de la prenda</h5>
                 </div>
                 <div class="card-body">
-                    <form #editProduct="ngForm" novalidate>
+                    <form novalidate>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -112,7 +112,7 @@
                                         <div style="overflow:auto; height: 200px;" ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                             <div class="search-product" style="margin-top: 5%;">
                                                 <button *ngFor="let gen of gender | filter: searchProduct"
-                                                ngbDropdownItem (click)="pushGender(gen)">{{gen.name}}</button>
+                                                ngbDropdownItem (click)="pushGender(gen)">{{gen.gender}}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@
                                                   placeholder=" &#61442; Buscar...">
                                               </div>
                                             <button *ngFor="let dtp of department | filter: searchProduct"
-                                          ngbDropdownItem (click)="pushDepart(dtp)">{{dtp.name}}</button>
+                                          ngbDropdownItem (click)="pushDepart(dtp)">{{dtp.department}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button
-                                type="button" class="btn btn-default btn-success" (click)="editProductFunc(editProduct)">
+                                type="button" class="btn btn-default btn-success" (click)="editProduct(editProduct)">
                                 <i class="now-ui-icons files_box"></i> Guardar Producto
                                 </button>
                             </div>

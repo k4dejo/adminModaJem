@@ -49,6 +49,11 @@ export class ApartService {
     return this._http.get(this.url + 'getApart/' + idApart, {headers: headers});
   }
 
+  getOnlyApart(idApart: any): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return this._http.get(this.url + 'getOnlyApart/' + idApart, {headers: headers});
+  }
+
   checkSizeIdApart(idProduct, size): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return this._http.get(this.url + 'checkSizeIdApart/' + idProduct + '/' + size,
@@ -89,5 +94,10 @@ export class ApartService {
   getApartClient(idClient: any): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return this._http.get(this.url + 'getApartClient/' + idClient, {headers: headers});
+  }
+
+  getAllApart(): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return this._http.get(this.url + 'getAllApart', {headers: headers});
   }
 }

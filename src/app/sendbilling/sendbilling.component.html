@@ -1,0 +1,53 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="title">Información de Factura</h5>
+        </div>
+        <div class="card-body">
+            <form id="FormFactu">
+                <div class="input-group-desc">
+                    <h5 style="text-align: left;"><strong>Nombre:</strong> {{billing.client}}</h5>
+                    <h5 style="text-align: left;"><strong>Teléfono:</strong> {{billing.phone}}</h5>
+                    <h5 style="text-align: left;"><strong>Correo Eléctronico:</strong> {{billing.email}}</h5>
+                    <h5 style="text-align: left;"><strong>Dirección:</strong> {{billing.address}}</h5>
+                    <h5 style="text-align: left;"><strong>Dirección Domicilio:</strong> {{billing.addressDetail}}</h5>
+                </div>
+                <div class="date">
+                    <h5 style="text-align: right;"><strong>Fecha:</strong> {{date}}</h5>
+                </div>
+                <div class="productList">
+                    <table id="tableBilling" class="FactuT table table-striped">
+                        <thead>
+                            <th scope="col">Producto</th>
+                            <th scope="col" class="quy-th">Cantidad</th>
+                            <th scope="col" class="size-th">Talla</th>
+                            <th scope="col" class="total-th">Precio</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let productBill of arrayApart">
+                                <td>{{productBill.name}}</td>
+                                <td>{{productBill.pivot.amount}}</td>
+                                <td>{{productBill.pivot.size}}</td>
+                                <td *ngIf="pPublic">
+                                    {{productBill.pricePublic * productBill.pivot.amount | number: "3."}}
+                                </td>
+                                <td *ngIf="pMajor">{{productBill.priceMajor * productBill.pivot.amount | number: "3."}}
+                                </td>
+                                <td *ngIf="pBoutique">{{productBill.priceTuB * productBill.pivot.amount | number: "3."}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 style="text-align: right;">Envío: {{shipping | number: "3."}}</h4>
+                    <h3 style="text-align: right;">Total <span style="font-size: 14px;">(+envío)</span>:
+                        {{billing.price | number: "3."}}</h3>
+                </div>
+                <input style="color: white;" type="button" class="btn btn--green btn--pill" value="Emitir Factura"
+                    (click)="addNewFact()">
+                <div *ngIf="loading" class="loading">Loading&#8230;</div>
+            </form>
+        </div>
+    </div>
+</div>

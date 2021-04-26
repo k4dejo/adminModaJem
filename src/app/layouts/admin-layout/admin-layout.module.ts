@@ -22,6 +22,7 @@ import { PromoComponent } from '../../promo/promo.component';
 import { EditproductComponent } from '../../editproduct/editproduct.component';
 import { ApartComponent } from '../../apart/apart.component';
 import { NgbdModalContent } from '../../apart/modalClient.component'
+import { SendbillingComponent } from '../../sendbilling/sendbilling.component';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import { NgbdModalContent } from '../../apart/modalClient.component'
       EditproductComponent,
       PromoComponent,
       NgbdModalContent,
+      SendbillingComponent,
       ApartComponent
     ],
     exports: [ToastrModule, HttpClientModule,RouterModule

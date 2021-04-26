@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
 
   private listTitles: any[];
   location: Location;
-    mobile_menu_visible: any = 0;
+  mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
 
@@ -75,7 +75,6 @@ export class NavbarComponent implements OnInit {
       navbar.classList.add('navbar-transparent');
       navbar.classList.remove('bg-white');
     }
-
   }
 
   sidebarOpen() {

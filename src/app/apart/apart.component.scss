@@ -13,6 +13,23 @@
     border-radius: 20px;
 }
 
+input {
+	outline: none;
+	margin: 0;
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	width: 100%;
+	font-size: 14px;
+	font-family: inherit;
+}
+
+td .img-responsive{
+	weight: 55px;
+	height: 55px;
+}
+
 /*-----radioBtn-----*/
 
 .fw-color-choose label span {

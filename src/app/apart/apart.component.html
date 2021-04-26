@@ -2,127 +2,171 @@
 </div>
 <div class="main-content">
     <div class="col-md-12">
+        <div class="card" *ngIf="selectedClient">
+            <div class="card-header">
+                <h5 class="title">Seleccionar Cliente</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <h6>Clientes
+                                <button (click)="openSelectedClient()" type="button"
+                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
+                                    <i class="now-ui-icons ui-1_simple-add"></i>
+                                </button>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" name="name" #name="ngModel" [(ngModel)]="client.name"
+                                class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" name="phone" #phone="ngModel"
+                                [(ngModel)]="client.phone" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" class="form-control" name="email" #email="ngModel"
+                                [(ngModel)]="client.email" required>
+                        </div>
+                    </div>
+                </div>
+                <label for="">Dirección</label>
+                <div class="row">
+                    <div class="col-md-4 pr-1">
+                        <div class="form-group">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                    ngbDropdownToggle>{{labelProvince}}</button>
+                                <div style="overflow:auto; height: 200px;" ngbDropdownMenu
+                                    aria-labelledby="dropdownBasic1">
+                                    <button (click)="getCant(province)" *ngFor="let province of ArrayProvin"
+                                        [value]="province.id" ngbDropdownItem>{{province.name}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 px-1">
+                        <div class="form-group">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                    ngbDropdownToggle>{{labelCan}}</button>
+                                <div style="overflow:auto; height: 200px;" ngbDropdownMenu
+                                    aria-labelledby="dropdownBasic1">
+                                    <div class="search-product" style="margin-top: 5%;">
+                                        <button (click)="getDist(Province, cant)" *ngFor="let cant of ArrayCant"
+                                            [value]="cant.id" ngbDropdownItem> {{cant.name}} </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pl-1">
+                        <div class="form-group">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                    ngbDropdownToggle>{{labelDist}}</button>
+                                <div style="overflow:auto; height: 200px;" ngbDropdownMenu
+                                    aria-labelledby="dropdownBasic1">
+                                    <button (click)="pushAddress(dist)" *ngFor="let dist of ArrayDist" [value]="dist.id"
+                                        ngbDropdownItem>{{dist.name}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <textarea cols="80" class="form-control" name="detail" placeholder="Dirección detallada"
+                            type="text" required>
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="!selectedClient">
+            <div class="card-header">
+                <h5 class="title">Seleccionar Cliente</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <h6>Clientes
+                                <button (click)="closeSelectedClient()" type="button"
+                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </h6>
+                        </div>
+                        <pagination-controls class="my-pagination" (pageChange)="pClient = $event">
+                        </pagination-controls>
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>Cliente</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let client of clients | paginate: { itemsPerPage: 8, currentPage: pClient }">
+                                    <td>{{client.name}}</td>
+                                    <td>{{client.email}}</td>
+                                    <td>{{client.phone}}</td>
+                                    <td>
+                                        <button (click)="selectClient(client)"
+                                            class="btn btn-outline-primary">Agregar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-header">
                 <h5 class="title">Apartados</h5>
             </div>
             <div class="card-body">
                 <form novalidate>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <h6 >Clientes 
-                                    <button (click)="open()" type="button"
-                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
-                                        <i class="now-ui-icons ui-1_simple-add"></i>
-                                    </button>
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" name="name" #name="ngModel"
-                                [(ngModel)]="client.name" class="form-control"
-                                disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Teléfono</label>
-                                <input type="text" class="form-control"
-                                name="name" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Correo Electrónico</label>
-                                <input type="email" class="form-control"
-                                name="name" required>
-                            </div>
-                        </div>
-                    </div>
-                    <label for="">Dirección</label>
-                    <div class="row">
-                        <div class="col-md-4 pr-1">
-                            <div class="form-group">
-                                <div ngbDropdown class="d-inline-block">
-                                    <button class="btn btn-outline-primary" id="dropdownBasic1"
-                                    ngbDropdownToggle>{{labelProvince}}</button>
-                                    <div style="overflow:auto; height: 200px;" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                      <button (click)="getCant(province)" *ngFor="let province of ArrayProvin" [value]="province.id"
-                                       ngbDropdownItem>{{province.name}}</button>
-                                    </div>
-                                  </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 px-1">
-                            <div class="form-group">
-                                <div ngbDropdown class="d-inline-block">
-                                    <button class="btn btn-outline-primary" id="dropdownBasic1"
-                                    ngbDropdownToggle>{{labelCan}}</button>
-                                    <div style="overflow:auto; height: 200px;" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                        <div class="search-product" style="margin-top: 5%;">
-                                            <button (click)="getDist(cant)"
-                                            *ngFor="let cant of ArrayCant" [value]="cant.id"
-                                            ngbDropdownItem> {{cant.name}} </button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 pl-1">
-                            <div class="form-group">
-                                <div ngbDropdown class="d-inline-block">
-                                    <button class="btn btn-outline-primary" id="dropdownBasic1"
-                                    ngbDropdownToggle>{{labelDist}}</button>
-                                    <div style="overflow:auto; height: 200px;" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                      <button (click)="pushAddress(dist)" *ngFor="let dist of ArrayDist" [value]="dist.id"
-                                      ngbDropdownItem>{{dist.name}}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <textarea  cols="80" class="form-control"
-                            name="detail"
-                            placeholder="Dirección detallada"
-                            type="text" required>
-                            </textarea>
-                        </div>
-                    </div>
-                    <br>
                     <label for="">Precio de la orden</label>
                     <div class="row">
                         <div class="col-md-4">
-                            <input style="color: white; background-color: rgb(96, 40, 252);"
-                            type="button" class="btn btn--pill" value="Precio Público">
+                            <input style="color: white; background-color: rgb(96, 40, 252);" type="button"
+                                class="btn btn--pill" value="Precio Público">
                         </div>
                         <div class="col-md-4">
-                            <input style="color: white; background-color:  rgb(96, 40, 252);"
-                            type="button" class="btn btn--pill"
-                            value="Precio por mayor" (click)="switchPrice(2)">
+                            <input style="color: white; background-color:  rgb(96, 40, 252);" type="button"
+                                class="btn btn--pill" value="Precio por mayor" (click)="switchPrice(2)">
                         </div>
                         <div class="col-md-4">
-                            <input style="color: white; background-color:  rgb(96, 40, 252);"
-                            type="button" class="btn btn--pill"
-                            value="Tu boutique" (click)="switchPrice(3)">
+                            <input style="color: white; background-color:  rgb(96, 40, 252);" type="button"
+                                class="btn btn--pill" value="Tu boutique" (click)="switchPrice(3)">
                         </div>
                     </div>
                     <div class="search-product">
-                        <input class="form-control" type="text" name="search" [(ngModel)]="searchProduct" autocomplete="off"
-                          placeholder=" &#61442; Buscar...">
+                        <input class="form-control" type="text" name="search" [(ngModel)]="searchProduct"
+                            autocomplete="off" placeholder=" &#61442; Buscar...">
                     </div>
                     <div class="row">
-                        <pagination-controls class="my-pagination" previousLabel="anterior"  nextLabel="Siguiente"
-                        (pageChange)="nextPaginate($event)"></pagination-controls>
+                        <pagination-controls id="productsList" class="my-pagination" previousLabel="anterior" nextLabel="Siguiente"
+                            (pageChange)="nextPaginate($event)"></pagination-controls>
                         <div class="table-responsive">
                             <table class="table table-striped" style="overflow: auto;">
                                 <thead>
@@ -136,21 +180,28 @@
                                     <th scope="col"></th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let product of productView | filter: searchProduct | paginate: {itemsPerPage: 8, currentPage: p}">
+                                    <!--<tr *ngFor="let product of productView 
+                                    | filter: searchProduct | paginate: {itemsPerPage: 8, currentPage: pageCurrent}">-->
+                                    <tr *ngFor="let product of productView |
+                                    paginate: { itemsPerPage: 10, currentPage: pageCurrent, totalItems: totalPage, id: 'productsList' }">
                                         <td>
                                             <img class="imgTable" [src]="product.photo" alt="">
                                         </td>
                                         <td>
                                             <!--<a (click)='over(product.id)' style="cursor: pointer;" data-toggle="modal" data-target="#myModalImg">{{product.name}}</a>-->
-                                            <a style="cursor: pointer;" data-toggle="modal" data-target="#myModalImg">{{product.name}}</a>
+                                            <a style="cursor: pointer;" data-toggle="modal"
+                                            data-target="#myModalImg">{{product.name}}</a>
                                         </td>
-                                        <td>{{product.gender}}</td>
-                                        <td>{{product.department}}</td>
+                                        <td>{{product.gender.gender}}</td>
+                                        <td>{{product.department.department}}</td>
                                         <td *ngIf="pPublic">₡ {{product.pricePublic | number: '3.'}}</td>
                                         <td *ngIf="pMajor">₡ {{product.priceMajor | number: '3.'}}</td>
                                         <td *ngIf="pBoutique">₡ {{product.priceTuB | number: '3.'}}</td>
-                                        <td><input style="color: white;" type="button" class="btn btn--blue btn--pill"
-                                        value="Agregar a compra" (click)="getProduct(product.id)"></td>
+                                        <td>
+                                            <input style="color: white;"
+                                            type="button" class="btn btn--blue btn--pill"
+                                            value="Agregar a compra" (click)="getProduct(product.id)">
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -160,37 +211,44 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label style="font-size: 15px;" for="">Producto</label>
-                            <input class="form-control" name="name" type="text"
-                            [placeholder]="productGet.name" disabled/>
+                            <input class="form-control" name="name" type="text" [placeholder]="productGet.name"
+                                disabled />
                             <br>
-                            <label style="font-size: 15px;" for="">Talla</label>
+
+                            <div class="input-group-desc">
+                                <div class="fw-size-choose">
+                                  <h4>Talla: </h4>
+                                  <div class="sc-item" *ngFor="let size of productSizes">
+                                    <input type="radio" name="sc" id="{{size.size}}" [value]="size.size"
+                                      (click)="sizeAdd(size, productGet)">
+                                    <label for="{{size.size}}">{{size.size}}</label>
+                                  </div>
+                                </div>
+                              </div>
+                            <!--<label style="font-size: 15px;" for="">Talla</label>
                             <div class="sc-item" *ngFor="let size of productSizes">
-                                <input type="radio" name="sc" id="{{size.size}}" [value]="size.size" (click)="sizeAdd(size, productGet)">
+                                <input type="radio" name="sc" id="{{size.size}}" [value]="size.size"
+                                (click)="sizeAdd(size, productGet)">
                                 <label for="{{size.size}}">{{size.size}}</label>
-                            </div>
+                            </div>-->
                             <br>
                             <label style="font-size: 15px;" for="">Cantidad</label>
-                            <input class="form-control" name="amount" #amount="ngModel"
-                            [(ngModel)]="valueQtyBtn" type="number" [placeholder]="0"/>
+                            <input class="form-control" name="amount" #amount="ngModel" [(ngModel)]="valueQtyBtn"
+                                type="number" [placeholder]="0" />
 
-                            <input *ngIf="!AmountInputBool" style="color: white;"
-                            type="button" class="btn btn--blue btn--pill"
-                            value="ADD" disabled>
+                            <input *ngIf="!AmountInputBool" style="color: white;" type="button"
+                                class="btn btn--blue btn--pill" value="ADD" disabled>
 
                             <input *ngIf="AmountInputBool" style="color: white;" type="button"
-                            class="btn btn--blue btn--pill"
-                            value="ADD" (click)="checkoutApart(productGet)">
-                            <label *ngIf="messageError" style="color: brown; padding-left: 5%;" for="">inventario insuficiente</label>
+                                class="btn btn--blue btn--pill" value="ADD" (click)="checkoutApart(productGet)">
+                            <label *ngIf="messageError" style="color: brown; padding-left: 5%;" for="">inventario
+                                insuficiente</label>
                         </div>
                     </div>
-                    <button
-                    type="button" class="btn btn-default btn-success">
-                    <i class="now-ui-icons files_box"></i> Facturar
-                    </button>
-                    <button (click)="catchClient()"
+                    <!--<button (click)="catchClient()"
                     type="button" class="btn btn-default btn-success">
                     <i class="now-ui-icons files_box"></i> recibir cliente
-                    </button>
+                    </button>-->
                     <div class="billing">
                         <table class="table table-striped" style="overflow: auto;">
                             <thead>
@@ -202,9 +260,31 @@
                                 <th scope="col"></th>
                             </thead>
                             <tbody>
-
+                                <tr *ngFor="let productApart of arrayApart">
+                                    <td><img [src]="productApart.photo" class="img-responsive" alt=""></td>
+                                    <td>
+                                        <a (click)='over(productApart.id)' style="cursor: pointer;" data-toggle="modal"
+                                        data-target="#myModalImg">{{productApart.name}}
+                                        </a>
+                                    </td>
+                                    <td>{{productApart.pivot.amount}}</td>
+                                    <td>{{productApart.pivot.size}}</td>
+                                    <td *ngIf="pPublic">₡ {{productApart.pricePublic * productApart.pivot.amount | number: '3.'}}</td>
+                                    <td *ngIf="pMajor">₡ {{productApart.priceMajor * productApart.pivot.amount | number: '3.'}}</td>
+                                    <td *ngIf="pBoutique">₡ {{productApart.priceTuB * productApart.pivot.amount | number: '3.'}}</td>
+                                    <td>
+                                      <input style="color: white;" type="button" class="btn btn--blue btn--pill" value="Eliminar"
+                                        (click)="detachProductBilling(productApart)">
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+                        <h3>Total: ₡ {{apartM.price | number: "3."}}</h3>
+                        <h4>Envío: ₡ {{shipping | number: "3."}} <input type="number" name="" id="" [value]="shipping"
+                            (change)="editShipping($event)"></h4>
+                        <button (click)="gotobill()" type="button" class="btn btn-default btn-success">
+                            <i class="now-ui-icons files_box"></i> Facturar
+                        </button>
                     </div>
                 </form>
             </div>

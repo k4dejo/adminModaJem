@@ -1,1 +1,123 @@
-<p>orders works!</p>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="card" *ngIf="!viewOrdersListBool">
+        <div class="card-header">
+            <h5 class="title">Pedidos</h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Seleccionar</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button (click)="searchPurchase($event.target.value)" ngbDropdownItem
+                            value="incomplete">incomplete</button>
+                        <button (click)="searchPurchase($event.target.value)" ngbDropdownItem
+                            value="procesando">procesando</button>
+                        <button (click)="searchPurchase($event.target.value)" ngbDropdownItem
+                            value="Enviado">Enviado</button>
+                    </div>
+                </div>
+            </div>
+            <div class="search-product" style="margin-top: 5%;">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchProduct" autocomplete="off"
+                    placeholder=" &#61442; Buscar...">
+            </div><br>
+            <pagination-controls class="my-pagination" previousLabel="anterior" nextLabel="Siguiente"
+                (pageChange)="nextPaginate($event)"></pagination-controls>
+            <table class="table table-striped  table-bordered">
+                <thead>
+                    <th scope="col">Codigo de orden</th>
+                    <th scope="col">Envío</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Estado</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let purchase of purchaselist | filter: searchProduct | paginate: { itemsPerPage: 12, currentPage: p, totalItems: lenghtOrders}">
+                        <td>
+                            {{purchase.orderId}}
+                        </td>
+                        <td>
+                            ₡ {{purchase.shipping}}
+                        </td>
+                        <td>
+                            ₡ {{purchase.price | number: '3.'}}
+                        </td>
+                        <td style="color: rgb(5, 207, 32);">
+                            {{purchase.status}}
+                        </td>
+                        <td>
+                            <input style="color: white;" type="button" (click)="toggleInfo(purchase)"
+                                data-toggle="modal" data-target="#infoPurchase" class="btn btn--blue btn--pill"
+                                value="ver">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls class="my-pagination" previousLabel="anterior" nextLabel="Siguiente"
+                (pageChange)="nextPaginate($event)"></pagination-controls>
+        </div>
+    </div>
+    <div class="card" *ngIf="viewOrdersListBool">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6"><h5 class="title">Informacion de Orden</h5></div>
+                <div class="col-md-1" style="margin-left: 40%;">
+                    <button (click)="closeviewOrder()" type="button"
+                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
+                    <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 col-xs-6 col-s-6" style="text-align: left;">
+                  <h3>Nombre Cliente:</h3>
+                  <p>{{purchaseinfo.clientName}}</p>
+                  <h3>Teléfono:</h3>
+                  {{purchaseinfo.clientPhone}}
+                  <h3>Dirección del envío</h3>
+                  <p>{{addressPurchase.address}}</p>
+                  <h4>Detalle</h4>
+                  <p>{{addressPurchase.addressDetail}}</p>
+                  <h3>Envío</h3>
+                    ₡ {{purchaseinfo.PurchaseShiping | number: '3.'}}
+                  <h3>Precio total:</h3>
+                  ₡ {{PricePurchase + purchaseinfo.PurchaseShiping | number: '3.'}}
+                </div>
+                <div class="col-md-6 col-xs-6 col-s-6">
+                  <table class="table table-striped">
+                    <thead>
+                      <th scope="col"></th>
+                      <th scope="col">producto</th>
+                      <th scope="col">Talla</th>
+                      <th scope="col">cantidad</th>
+                      <th scope="col">precio</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of productList | paginate: { itemsPerPage: 4, currentPage: pModalClient }">
+                        <td><img style="width: 40px; height: 50px; color: rgb(211, 34, 34);" [src]="product.photo" alt=""></td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.pivot.size}}</td>
+                        <td>{{product.pivot.amount}}</td>
+                        <td>₡ {{product.pricePublic | number: '3.'}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <pagination-controls class="my-pagination" (pageChange)="pModalClient = $event">
+                  </pagination-controls>
+                  <div class="colPhoto">
+                    <a (click)="downloadImg()" href="" data-toggle="modal" data-target="#myModal">
+                      <img class="img-responsive" [src]="ticketPurchase.ticket" alt="">
+                    </a>
+                  </div>
+                  <input *ngIf="!sendBtnBool" type="button" class="btn btn--green btn--pill"
+                  (click)="submitPurchaseClient()" data-dismiss="modal" value="Emitir">
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

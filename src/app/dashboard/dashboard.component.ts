@@ -1,12 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import * as Chartist from 'chartist';
+import * as Chartist from 'chartist'
+import { Apart } from '../models/apart';
+import { ImgUrl } from '../models/imgUrl';
+import { AdminService} from '../services/admin.service';
+import { ApartService } from '../services/apart.service';
+import { ReportsellingService } from '../services/reportselling.service';
 
 @Component({
   selector: 'app-dashboard',
+  providers: [ReportsellingService, AdminService, ApartService],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public token;
+  public aparts;
+  public p = 1;
+  public imgUrl = ImgUrl;
+  public productView;
+  public identity;
+  public beginDate;
+  public finishDate;
+  public dataChart = [];
+  public dataLabel = [];
+  public isGetChartSelling = false;
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
@@ -59,8 +76,59 @@ export class DashboardComponent implements OnInit {
       return "rgb(" + r + ", " + g + ", " + b + ")";
     }
   }
-  constructor() { }
+  constructor(private reportSelligService: ReportsellingService,
+    private apartService: ApartService,
+    private adminService: AdminService) {
+    this.token = this.adminService.getToken();
+    this.identity = this.adminService.getIdentity();
+  }
+
+  getDataChart() {
+    this.reportSelligService.getDataChart(this.token).subscribe(
+      response => {
+        response.chart.map((current) =>{
+          this.dataChart.push(current.sellsOfDay);
+          this.dataLabel.push(current.date);
+        });
+        this.lineChartData =[
+          { data: this.dataChart, label: 'Ventas Acumladas' },
+        ];
+        this.lineChartLabels = this.dataLabel;
+        this.isGetChartSelling = true;
+      }, error => {
+        console.log(<any> error);
+      }
+    );
+  }
+
+  getAllApart() {
+    this.apartService.getAllApart().subscribe(
+      response => {
+        this.aparts = response.aparts;
+        console.log(this.aparts);
+      }, error => {
+        console.log(<any> error);
+      }
+    );
+  }
+
+  getListProduct(productsList: any) {
+    this.productView = productsList;
+    this.addPhotoProductList();
+  }
+
+  addPhotoProductList() {
+    for (let index = 0; index < this.productView.length; index++) {
+      // agrego formato a la imagen.
+      const isLink = this.productView[index].photo.split(':');
+      if (isLink.length === 1) {
+        this.productView[index].photo = this.imgUrl.url + this.productView[index].photo;
+      }
+    }
+  }
+
   ngOnInit() {
+    this.getAllApart();
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");
     this.ctx = this.canvas.getContext("2d");
@@ -72,6 +140,7 @@ export class DashboardComponent implements OnInit {
     this.gradientFill = this.ctx.createLinearGradient(0, 200, 0, 50);
     this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
     this.gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
+    this.getDataChart();
 
     this.lineBigDashboardChartData = [
         {
@@ -84,7 +153,7 @@ export class DashboardComponent implements OnInit {
           fill: true,
 
           borderWidth: 2,
-          data: [50, 150, 100, 190, 130, 90, 150, 160, 120, 140, 190, 95]
+          data: this.dataChart
         }
       ];
       this.lineBigDashboardChartColors = [
@@ -97,7 +166,8 @@ export class DashboardComponent implements OnInit {
          pointHoverBorderColor: this.chartColor,
        }
      ];
-    this.lineBigDashboardChartLabels = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    //this.lineBigDashboardChartLabels = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    this.lineBigDashboardChartLabels = this.dataLabel;
     this.lineBigDashboardChartOptions = {
 
           layout: {
